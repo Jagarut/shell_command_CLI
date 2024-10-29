@@ -20,6 +20,42 @@ def check_dependencies():
             print(f"  {package}")
         sys.exit(1)
 
+from enum import Enum
+
+class Shell(Enum):
+    CMD = "Windows Command Prompt"
+    POWERSHELL = "PowerShell"
+    BASH = "bash"
+
+def get_shell_selection() -> Shell:
+    shells = {
+        str(i): shell 
+        for i, shell in enumerate(Shell, 1)
+    }
+    
+    print("\nSelect shell type:")
+    for num, shell in shells.items():
+        print(f"{num}. {shell.value}")
+        
+    while True:
+        selection = input("Enter number (1-3): ").strip()
+        if selection in shells:
+            return shells[selection]
+        print("Invalid selection. Please choose 1, 2, or 3.")
+
+def get_command_description() -> str:
+    print("\nDescribe the command you want to generate:")
+    return input("> ").strip()
+
+def get_user_input():
+    query = get_command_description()
+    shell_type = get_shell_selection()
+    
+    print("\nYour inputs:")
+    print(f"Command description: {query}")
+    print(f"Selected shell: {shell_type.value}")
+    
+    return query, shell_type
 def main():
     # Check dependencies first
     check_dependencies()
@@ -36,8 +72,8 @@ def main():
 
     print("Dependencies installed and API key found. Project setup complete.")
     
-    # Get user input for shell command
-    command = input("Enter the shell command you want to copy: ")
+    # Get user input
+    query, shell_type = get_user_input()
     
     # Copy command to clipboard
     pyperclip.copy(command)
