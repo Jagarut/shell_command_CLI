@@ -96,5 +96,17 @@ def main():
     # Print confirmation message
     print(f"Command '{command}' copied to clipboard.")
 
+    # Ask user if they want to generate another command
+    while True:
+        generate_again = input("Generate another command? (y/n): ").strip().lower()
+        if generate_again in ('y', 'n'):
+            break
+        print("Invalid input. Please enter 'y' or 'n'.")
+
+    if generate_again == 'y':
+        main()
+    else:
+        print("Exiting.")
+
 if __name__ == "__main__":
     main()
