@@ -35,5 +35,15 @@ def main():
         sys.exit(1)
 
     print("Dependencies installed and API key found. Project setup complete.")
+    
+    # Get user input for shell command
+    command = input("Enter the shell command you want to copy: ")
+    
+    # Copy command to clipboard
+    pyperclip.copy(command)
+    
+    # Print confirmation message
+    print(f"Command '{command}' copied to clipboard.")
+
 if __name__ == "__main__":
     main()
