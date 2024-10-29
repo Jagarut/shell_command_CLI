@@ -76,14 +76,18 @@ def main():
     query, shell_type = get_user_input()
     
     # Generate command using Gemini API
-    response = genai.generate_text(
-        model='text-bison',
-        prompt=f"Generate a {shell_type.value} command to {query}",
-        temperature=0.2,
-        top_k=50,
-        top_p=0.95,
-        max_output_tokens=100
-    )
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    response = model.generate_content(
+        f"Generate a {shell_type.value} command to {query}",
+        generation_config=genai.types.GenerationConfig(
+            temperature=0.2,
+            top_k=50,
+            top_p=0.95,
+            max_output_tokens=100
+        )
+    )    
+
+    # Extract and print the generated command
     command = response.text
     
     # Copy command to clipboard
