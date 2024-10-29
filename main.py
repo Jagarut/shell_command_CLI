@@ -75,6 +75,17 @@ def main():
     # Get user input
     query, shell_type = get_user_input()
     
+    # Generate command using Gemini API
+    response = genai.generate_text(
+        model='text-bison',
+        prompt=f"Generate a {shell_type.value} command to {query}",
+        temperature=0.2,
+        top_k=50,
+        top_p=0.95,
+        max_output_tokens=100
+    )
+    command = response.text
+    
     # Copy command to clipboard
     pyperclip.copy(command)
     
