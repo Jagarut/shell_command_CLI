@@ -54,12 +54,18 @@ def get_shell_selection() -> Shell:
     for num, shell in shells.items():
         print(f"{num}. {shell.value}")
         
-    while True:
+    max_attempts = 3    
+    attempts = 0
+        
+    while attempts < max_attempts:
         selection = input(f"{Fore.YELLOW}Enter number (1-3): ").strip()
         if selection in shells:
             return shells[selection]
         print(f"{Fore.RED}Invalid selection. Please choose 1, 2, or 3.")
-
+        attempts += 1
+        raise ValueError("Maximum attempts reached. Please restart the program.")
+    
+    
 def get_command_description() -> str:
     """
     Gets a description of the command from the user.
