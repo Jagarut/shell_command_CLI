@@ -4,6 +4,7 @@ import sys
 from dotenv import load_dotenv
 import os
 from colorama import Fore, Style, init
+from unittest.mock import patch  # Import patch from unittest.mock
 
 init(autoreset=True)  # Initialize colorama for colored output
 
