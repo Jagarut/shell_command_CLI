@@ -81,7 +81,8 @@ def main():
     # Generate command using Gemini API
     model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(
-        f"Generate a {shell_type.value} command to {query}",
+        # f"Generate a {shell_type.value} command to {query}",
+        f"Generate a valid {shell_type.value} command for the following query: {query}. Return ONLY the command, without any explanation.",
         generation_config=genai.types.GenerationConfig(
             temperature=0.2,
             top_k=50,
@@ -89,7 +90,6 @@ def main():
             max_output_tokens=100
         )
     )    
-
     # Extract and print the generated command
     command = response.text
     
@@ -113,3 +113,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
