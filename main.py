@@ -5,6 +5,11 @@ from dotenv import load_dotenv
 import os
 
 def check_dependencies():
+    """Checks if required dependencies are installed.
+
+    This function checks if the required packages (`google.generativeai` and `pyperclip`) are installed.
+    If any are missing, it prints an error message and exits the program.
+    """
     required_packages = ["google.generativeai", "pyperclip"]
     missing_packages = []
     
@@ -23,11 +28,17 @@ def check_dependencies():
 from enum import Enum
 
 class Shell(Enum):
+    """Represents different shell types."""
     CMD = "Windows Command Prompt"
     POWERSHELL = "PowerShell"
     BASH = "bash"
 
 def get_shell_selection() -> Shell:
+    """Gets the user's selection for the shell type.
+
+    This function presents a menu of shell types to the user and prompts them to choose one.
+    It validates the user's input and returns the selected shell type.
+    """
     shells = {
         str(i): shell 
         for i, shell in enumerate(Shell, 1)
@@ -44,10 +55,20 @@ def get_shell_selection() -> Shell:
         print("Invalid selection. Please choose 1, 2, or 3.")
 
 def get_command_description() -> str:
+    """Gets a description of the command from the user.
+
+    This function prompts the user to describe the command they want to generate.
+    It returns the user's input as a string.
+    """
     print("\nDescribe the command you want to generate:")
     return input("> ").strip()
 
 def get_user_input():
+    """Gets the user's input for the command description and shell type.
+
+    This function calls `get_command_description` and `get_shell_selection` to get the user's input.
+    It then prints the user's inputs for confirmation and returns them as a tuple.
+    """
     query = get_command_description()
     shell_type = get_shell_selection()
     
@@ -58,6 +79,12 @@ def get_user_input():
     return query, shell_type
 
 def main():
+    """Main function of the program.
+
+    This function checks dependencies, loads the API key, gets user input, generates a command using the Gemini API,
+    copies the command to the clipboard, and prints a confirmation message.
+    It also allows the user to generate another command or exit the program.
+    """
     # Check dependencies first
     check_dependencies()
     
@@ -113,5 +140,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
