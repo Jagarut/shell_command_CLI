@@ -3,6 +3,9 @@ import pyperclip
 import sys
 from dotenv import load_dotenv
 import os
+from colorama import Fore, Style, init
+
+init(autoreset=True)  # Initialize colorama for colored output
 
 def check_dependencies():
     """
@@ -11,7 +14,7 @@ def check_dependencies():
     This function checks if the required packages (`google.generativeai` and `pyperclip`) are installed.
     If any are missing, it prints an error message and exits the program.
     """
-    required_packages = ["google.generativeai", "pyperclip"]
+    required_packages = ["google.generativeai", "pyperclip", "colorama"]
     missing_packages = []
     
     for package in required_packages:
@@ -21,7 +24,7 @@ def check_dependencies():
             missing_packages.append(package)
     
     if missing_packages:
-        print("Error: Missing dependencies. Please install the following packages:")
+        print(f"{Fore.RED}Error: Missing dependencies. Please install the following packages:")
         for package in missing_packages:
             print(f"  {package}")
         sys.exit(1)
@@ -46,15 +49,15 @@ def get_shell_selection() -> Shell:
         for i, shell in enumerate(Shell, 1)
     }
     
-    print("\nSelect shell type:")
+    print(f"\n{Fore.CYAN}Select shell type:")
     for num, shell in shells.items():
         print(f"{num}. {shell.value}")
         
     while True:
-        selection = input("Enter number (1-3): ").strip()
+        selection = input(f"{Fore.YELLOW}Enter number (1-3): ").strip()
         if selection in shells:
             return shells[selection]
-        print("Invalid selection. Please choose 1, 2, or 3.")
+        print(f"{Fore.RED}Invalid selection. Please choose 1, 2, or 3.")
 
 def get_command_description() -> str:
     """
@@ -63,8 +66,8 @@ def get_command_description() -> str:
     This function prompts the user to describe the command they want to generate.
     It returns the user's input as a string.
     """
-    print("\nDescribe the command you want to generate:")
-    return input("> ").strip()
+    print(f"\n{Fore.CYAN}Describe the command you want to generate:")
+    return input(f"{Fore.YELLOW}> ").strip()
 
 def get_user_input():
     """
@@ -76,7 +79,7 @@ def get_user_input():
     query = get_command_description()
     shell_type = get_shell_selection()
     
-    print("\nYour inputs:")
+    print(f"\n{Fore.CYAN}Your inputs:")
     print(f"Command description: {query}")
     print(f"Selected shell: {shell_type.value}\n")
     
@@ -102,10 +105,10 @@ def main():
 
     # Check for API key
     if not api_key:
-        print("Error: API key not found. Please set the 'GOOGLE_API_KEY' environment variable in your .env file.")
+        print(f"{Fore.RED}Error: API key not found. Please set the 'GOOGLE_API_KEY' environment variable in your .env file.")
         sys.exit(1)
 
-    print("Dependencies installed and API key found. Project setup complete.")
+    print(f"{Fore.GREEN}Dependencies installed and API key found. Project setup complete.")
     
     # Get user input
     query, shell_type = get_user_input()
@@ -129,19 +132,19 @@ def main():
     pyperclip.copy(command)
     
     # Print confirmation message
-    print(f"\nCommand '{command}' copied to clipboard.\n")
+    print(f"\n{Fore.GREEN}Command '{command}' copied to clipboard.\n")
 
     # Ask user if they want to generate another command
     while True:
-        generate_again = input("Generate another command? (y/n): ").strip().lower()
+        generate_again = input(f"{Fore.YELLOW}Generate another command? (y/n): ").strip().lower()
         if generate_again in ('y', 'n'):
             break
-        print("Invalid input. Please enter 'y' or 'n'.")
+        print(f"{Fore.RED}Invalid input. Please enter 'y' or 'n'.")
 
     if generate_again == 'y':
         main()
     else:
-        print("Exiting.")
+        print(f"{Fore.YELLOW}Exiting.")
 
 if __name__ == "__main__":
     main()
