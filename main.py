@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 import os
 
 def check_dependencies():
-    """Checks if required dependencies are installed.
+    """
+    Checks if required dependencies are installed.
 
     This function checks if the required packages (`google.generativeai` and `pyperclip`) are installed.
     If any are missing, it prints an error message and exits the program.
@@ -34,7 +35,8 @@ class Shell(Enum):
     BASH = "bash"
 
 def get_shell_selection() -> Shell:
-    """Gets the user's selection for the shell type.
+    """
+    Gets the user's selection for the shell type.
 
     This function presents a menu of shell types to the user and prompts them to choose one.
     It validates the user's input and returns the selected shell type.
@@ -55,7 +57,8 @@ def get_shell_selection() -> Shell:
         print("Invalid selection. Please choose 1, 2, or 3.")
 
 def get_command_description() -> str:
-    """Gets a description of the command from the user.
+    """
+    Gets a description of the command from the user.
 
     This function prompts the user to describe the command they want to generate.
     It returns the user's input as a string.
@@ -64,7 +67,8 @@ def get_command_description() -> str:
     return input("> ").strip()
 
 def get_user_input():
-    """Gets the user's input for the command description and shell type.
+    """
+    Gets the user's input for the command description and shell type.
 
     This function calls `get_command_description` and `get_shell_selection` to get the user's input.
     It then prints the user's inputs for confirmation and returns them as a tuple.
@@ -74,12 +78,13 @@ def get_user_input():
     
     print("\nYour inputs:")
     print(f"Command description: {query}")
-    print(f"Selected shell: {shell_type.value}")
+    print(f"Selected shell: {shell_type.value}\n")
     
     return query, shell_type
 
 def main():
-    """Main function of the program.
+    """
+    Main function of the program.
 
     This function checks dependencies, loads the API key, gets user input, generates a command using the Gemini API,
     copies the command to the clipboard, and prints a confirmation message.
@@ -118,13 +123,13 @@ def main():
         )
     )    
     # Extract and print the generated command
-    command = response.text
+    command = response.text.strip()
     
     # Copy command to clipboard
     pyperclip.copy(command)
     
     # Print confirmation message
-    print(f"Command '{command}' copied to clipboard.")
+    print(f"\nCommand '{command}' copied to clipboard.\n")
 
     # Ask user if they want to generate another command
     while True:
