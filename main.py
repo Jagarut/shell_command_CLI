@@ -56,11 +56,14 @@ def get_user_input():
     print(f"Selected shell: {shell_type.value}")
     
     return query, shell_type
+
 def main():
     # Check dependencies first
     check_dependencies()
     
     # Load and configure API key
+    # The load_dotenv() function reads key-value pairs from a .env file 
+    # and adds them to the environment variables that can be accessed using os.getenv()
     load_dotenv()
     api_key = os.getenv('GOOGLE_API_KEY')
     genai.configure(api_key=api_key)
